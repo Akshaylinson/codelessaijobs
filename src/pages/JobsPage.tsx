@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Search,
@@ -9,6 +9,8 @@ import {
   Briefcase,
   AlertCircle,
   ArrowUpDown,
+  ChevronDown,
+  Check,
 } from 'lucide-react';
 import { Job, SiteSettings } from '../types/job';
 import { JobCard } from '../components/JobCard';
@@ -48,6 +50,23 @@ export const JobsPage: React.FC<JobsPageProps> = ({
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const sortDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortDropdownRef.current && !sortDropdownRef.current.contains(e.target as Node)) {
+        setSortDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const sortOptions: { value: 'newest' | 'oldest'; label: string }[] = [
+    { value: 'newest', label: 'Newest First' },
+    { value: 'oldest', label: 'Oldest First' },
+  ];
 
   // Sync state if URL query params change (e.g. from Hero link)
   useEffect(() => {
@@ -149,20 +168,39 @@ export const JobsPage: React.FC<JobsPageProps> = ({
 
             {/* Sort & Mobile Filter Toggle */}
             <div className="flex items-center gap-2.5">
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-medium text-slate-700">
-                <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-                <label htmlFor="sort-select" className="text-slate-500 hidden sm:inline">
-                  Sort:
-                </label>
-                <select
-                  id="sort-select"
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
-                  className="bg-transparent text-xs font-semibold text-slate-900 focus:outline-hidden cursor-pointer"
+              <div className="relative" ref={sortDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setSortDropdownOpen((o) => !o)}
+                  className="flex items-center gap-1.5 bg-white border border-slate-200 hover:border-blue-400 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-100"
+                  aria-haspopup="listbox"
+                  aria-expanded={sortDropdownOpen}
                 >
-                  <option value="newest">Newest First</option>
-                  <option value="oldest">Oldest First</option>
-                </select>
+                  <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+                  <span className="text-slate-500 hidden sm:inline font-medium">Sort:</span>
+                  <span className="text-slate-900">{sortOptions.find((o) => o.value === sortOrder)?.label}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-150 ${sortDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {sortDropdownOpen && (
+                  <div className="absolute left-0 sm:left-auto sm:right-0 mt-1.5 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 overflow-hidden py-1">
+                    {sortOptions.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => { setSortOrder(opt.value); setSortDropdownOpen(false); }}
+                        className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold transition-colors ${
+                          sortOrder === opt.value
+                            ? 'bg-blue-50 text-blue-700'
+                            : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                        }`}
+                      >
+                        <span>{opt.label}</span>
+                        {sortOrder === opt.value && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Mobile Filter Button */}
