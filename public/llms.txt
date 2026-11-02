@@ -1,0 +1,32 @@
+# Codeless AI Jobs
+> A curated job board for tech, AI, fullstack, and cloud engineering roles. All listings are verified directly from employer career portals. No middlemen. Apply straight to the source.
+
+## About
+Codeless AI Jobs (jobs.codelessai.in) aggregates verified software engineering, artificial intelligence, machine learning, fullstack development, and cloud infrastructure job opportunities. Every listing links directly to the employer's official career portal or ATS.
+
+## What We List
+- Software Engineering roles (frontend, backend, fullstack)
+- Artificial Intelligence and Machine Learning positions
+- Cloud, DevOps, and Infrastructure engineering jobs
+- Data Science and Analytics roles
+- UI/UX and Product Design positions
+- Internships and entry-level tech roles
+
+## How It Works
+- Jobs are curated and verified by administrators directly from company career sites
+- Each listing includes the official application URL — no resume uploads or account creation required
+- Listings are tagged with skills, work type (Remote, Hybrid, On-site), and experience level
+- Closed or expired roles are removed promptly
+
+## Key Pages
+- Homepage: https://jobs.codelessai.in/
+- Browse All Jobs: https://jobs.codelessai.in/jobs
+- Disclaimer: https://jobs.codelessai.in/disclaimer
+
+## Data & Privacy
+- No candidate personal data is collected
+- No user accounts or logins required
+- All job data sourced from public employer career portals
+
+## Contact
+hello@codelessai.in

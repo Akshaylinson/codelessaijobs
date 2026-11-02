@@ -118,20 +118,28 @@ async function run() {
       title: job.job_title,
       description: job.job_description,
       datePosted: job.date_added || new Date().toISOString().slice(0, 10),
-      hiringOrganization: {
-        '@type': 'Organization',
-        name: job.company_name,
-        sameAs: job.company_website || undefined,
-        logo: job.company_logo_url || undefined,
-      },
+      jobLocation: job.tags.some((t) => t.toLowerCase() === 'remote')
+        ? { '@type': 'Place', address: { '@type': 'PostalAddress', addressCountry: 'Worldwide' } }
+        : undefined,
       jobLocationType: job.tags.some((t) => t.toLowerCase() === 'remote')
         ? 'TELECOMMUTE'
+        : undefined,
+      applicantLocationRequirements: job.tags.some((t) => t.toLowerCase() === 'remote')
+        ? { '@type': 'Country', name: 'Worldwide' }
         : undefined,
       employmentType: job.tags.some((t) => t.toLowerCase() === 'internship')
         ? 'INTERN'
         : job.tags.some((t) => t.toLowerCase() === 'part-time')
         ? 'PART_TIME'
         : 'FULL_TIME',
+      hiringOrganization: {
+        '@type': 'Organization',
+        name: job.company_name,
+        sameAs: job.company_website || undefined,
+        logo: job.company_logo_url || undefined,
+      },
+      directApply: true,
+      url: canonicalUrl,
     };
 
     let staticJobHtml = baseHtml
@@ -207,10 +215,38 @@ async function run() {
   const robotsTxt = `User-agent: *
 Allow: /
 
+# AI/LLM crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
 Sitemap: ${BASE_DOMAIN}/sitemap.xml
+LLMs: ${BASE_DOMAIN}/llms.txt
 `;
   fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt);
   console.log('✓ Generated robots.txt');
+
+  // 8. Copy llms.txt to dist (already in public/, Vite copies it — but ensure it exists)
+  const llmsSrc = path.resolve(process.cwd(), 'public/llms.txt');
+  const llmsDest = path.join(DIST_DIR, 'llms.txt');
+  if (fs.existsSync(llmsSrc) && !fs.existsSync(llmsDest)) {
+    fs.copyFileSync(llmsSrc, llmsDest);
+  }
+  console.log('✓ Verified llms.txt for AI/LLM crawlers (GEO)');
 
   console.log('Static site generation complete!');
 }
