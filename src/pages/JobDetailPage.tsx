@@ -218,73 +218,91 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
         </div>
 
         {/* Main Job Card & Header */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-8 mb-8">
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-8 mb-4">
 
-          {/* Logo + Company + Apply row (desktop) / stacked (mobile) */}
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 pb-6 border-b border-slate-100">
+          {/* Top: Logo + Company + Title + Meta */}
+          <div className="flex items-start gap-4 min-w-0 pb-5 border-b border-slate-100">
+            {/* Logo */}
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+              {showFallback ? (
+                <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xl tracking-wider">
+                  {initials}
+                </div>
+              ) : (
+                <img
+                  src={logoUrl}
+                  alt={`${job.company_name} logo`}
+                  onError={() => setImageError(true)}
+                  className="w-full h-full object-contain object-center p-1"
+                />
+              )}
+            </div>
 
-            {/* Left: Logo + Company + Title + Meta */}
-            <div className="flex items-start gap-4 min-w-0">
-              {/* Logo */}
-              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
-                {showFallback ? (
-                  <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xl tracking-wider">
-                    {initials}
-                  </div>
-                ) : (
-                  <img
-                    src={logoUrl}
-                    alt={`${job.company_name} logo`}
-                    onError={() => setImageError(true)}
-                    className="w-full h-full object-contain object-center p-1"
-                  />
+            {/* Company + Title + Meta */}
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="text-sm font-bold text-slate-700">{job.company_name}</span>
+                {companyWebsite && (
+                  <a
+                    href={companyWebsite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium underline"
+                  >
+                    <Globe className="w-3 h-3" />
+                    <span>Company Website</span>
+                  </a>
                 )}
               </div>
 
-              {/* Company name + website + title + meta */}
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className="text-sm font-bold text-slate-700">{job.company_name}</span>
-                  {companyWebsite && (
-                    <a
-                      href={companyWebsite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium underline"
-                    >
-                      <Globe className="w-3 h-3" />
-                      <span>Company Website</span>
-                    </a>
-                  )}
-                </div>
+              <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-words">
+                {job.job_title}
+              </h1>
 
-                <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-words">
-                  {job.job_title}
-                </h1>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-2.5 font-medium">
+                {job.date_added && (
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Posted {formatDate(job.date_added)}</span>
+                  </div>
+                )}
+                {job.last_updated && job.last_updated !== job.date_added && (
+                  <div className="flex items-center gap-1 text-slate-400">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Updated {formatDate(job.last_updated)}</span>
+                  </div>
+                )}
+                <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Verified Opportunity</span>
+                </span>
+              </div>
+            </div>
+          </div>
 
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-2.5 font-medium">
-                  {job.date_added && (
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                      <span>Posted {formatDate(job.date_added)}</span>
-                    </div>
-                  )}
-                  {job.last_updated && job.last_updated !== job.date_added && (
-                    <div className="flex items-center gap-1 text-slate-400">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>Updated {formatDate(job.last_updated)}</span>
-                    </div>
-                  )}
-                  <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Verified Opportunity</span>
-                  </span>
-                </div>
+          {/* Bottom: Tags left, Apply Now right */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-5">
+            {/* Tags */}
+            <div className="min-w-0">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-blue-600" />
+                <span>Role & Skill Tags</span>
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {job.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    to={`/jobs?tag=${encodeURIComponent(tag)}`}
+                    className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-100 hover:text-blue-700 text-slate-700 text-xs font-semibold transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
               </div>
             </div>
 
-            {/* Apply Now — right on desktop, full-width below on mobile */}
-            <div className="shrink-0 flex flex-col items-stretch sm:items-end gap-1.5">
+            {/* Apply Now */}
+            <div className="shrink-0 flex flex-col items-stretch sm:items-end gap-1">
               {sanitizedAppUrl ? (
                 <button
                   type="button"
@@ -295,32 +313,11 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
                   <ExternalLink className="w-4 h-4" />
                 </button>
               ) : (
-                <span className="text-xs text-slate-400 italic">
-                  Application destination unavailable
-                </span>
+                <span className="text-xs text-slate-400 italic">Application destination unavailable</span>
               )}
               <span className="text-[11px] text-slate-400 text-center sm:text-right">
                 Redirects to employer&rsquo;s official portal
               </span>
-            </div>
-          </div>
-
-          {/* Tags */}
-          <div className="pt-6">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
-              <Tag className="w-3.5 h-3.5 text-blue-600" />
-              <span>Role & Skill Tags</span>
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {job.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  to={`/jobs?tag=${encodeURIComponent(tag)}`}
-                  className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-blue-100 hover:text-blue-700 text-slate-700 text-xs font-semibold transition-colors"
-                >
-                  {tag}
-                </Link>
-              ))}
             </div>
           </div>
         </div>
