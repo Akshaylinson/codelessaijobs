@@ -218,11 +218,15 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
         </div>
 
         {/* Main Job Card & Header */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-6 sm:p-8 mb-8">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-slate-100">
-            {/* Company & Title */}
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-8 mb-8">
+
+          {/* Logo + Company + Apply row (desktop) / stacked (mobile) */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 pb-6 border-b border-slate-100">
+
+            {/* Left: Logo + Company + Title + Meta */}
+            <div className="flex items-start gap-4 min-w-0">
+              {/* Logo */}
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
                 {showFallback ? (
                   <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xl tracking-wider">
                     {initials}
@@ -237,11 +241,10 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
                 )}
               </div>
 
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <span className="text-sm font-bold text-slate-700">
-                    {job.company_name}
-                  </span>
+              {/* Company name + website + title + meta */}
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="text-sm font-bold text-slate-700">{job.company_name}</span>
                   {companyWebsite && (
                     <a
                       href={companyWebsite}
@@ -255,12 +258,11 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
                   )}
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-words">
                   {job.job_title}
                 </h1>
 
-                {/* Metadata row */}
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 mt-3 font-medium">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-2.5 font-medium">
                   {job.date_added && (
                     <div className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -281,13 +283,13 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
               </div>
             </div>
 
-            {/* Apply Now Primary Action */}
-            <div className="shrink-0 flex flex-col items-start md:items-end gap-2">
+            {/* Apply Now — right on desktop, full-width below on mobile */}
+            <div className="shrink-0 flex flex-col items-stretch sm:items-end gap-1.5">
               {sanitizedAppUrl ? (
                 <button
                   type="button"
                   onClick={handleApplyClick}
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-base shadow-sm shadow-blue-500/30 transition-all hover:scale-[1.01]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-base shadow-sm shadow-blue-500/30 transition-all hover:scale-[1.01]"
                 >
                   <span>Apply Now</span>
                   <ExternalLink className="w-4 h-4" />
@@ -297,7 +299,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
                   Application destination unavailable
                 </span>
               )}
-              <span className="text-[11px] text-slate-400 text-center md:text-right">
+              <span className="text-[11px] text-slate-400 text-center sm:text-right">
                 Redirects to employer&rsquo;s official portal
               </span>
             </div>
