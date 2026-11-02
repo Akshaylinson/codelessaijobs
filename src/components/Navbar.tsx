@@ -9,6 +9,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ settings }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const location = useLocation();
 
   const isHome = location.pathname === '/';
@@ -16,11 +17,23 @@ export const Navbar: React.FC<NavbarProps> = ({ settings }) => {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-      {settings?.announcement && (
-        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white text-xs sm:text-sm font-medium py-1.5 px-4 text-center">
-          <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-200 shrink-0" />
-            <span className="truncate">{settings.announcement}</span>
+      {settings?.announcement && !announcementDismissed && (
+        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white text-xs sm:text-sm font-medium py-1.5 px-4">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5 flex-1 justify-center">
+              <Sparkles className="w-3.5 h-3.5 text-blue-200 shrink-0" />
+              <span className="truncate">
+                {settings.announcement.replace(/[\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}]|[\uD800-\uDBFF][\uDC00-\uDFFF]/gu, '').trim()}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAnnouncementDismissed(true)}
+              aria-label="Close announcement"
+              className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-blue-200 hover:text-white hover:bg-white/20 transition-colors"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       )}
