@@ -1,0 +1,49 @@
+job_id,slug,job_title,company_name,company_logo_url,company_website,company_description,job_description,about_role,application_url,tags,status,date_added,last_updated
+JOB-2026-001,senior-ai-research-engineer-anthropic,Senior AI Research Engineer,Anthropic,https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=160&h=160&fit=crop&q=80,https://www.anthropic.com,Anthropic is an AI safety and research company dedicated to building reliable interpretable AI.,"### Role Overview
+We are looking for a Senior AI Research Engineer to help train and evaluate our next generation of frontier AI models.
+
+### Responsibilities
+- Architect high-throughput distributed training algorithms across thousands of accelerators.
+- Develop programmatic evals for reasoning code synthesis and tool-use fidelity.
+- Collaborate closely with alignment researchers to quantify model vulnerabilities.
+
+### Requirements
+- 4+ years in machine learning infrastructure or distributed systems.
+- Strong proficiency with Python, PyTorch, and distributed training frameworks.",Join the alignment research team building frontier AI models with steerability.,https://www.anthropic.com/careers,Artificial Intelligence | Machine Learning | Python | Remote | Full-Time,Published,2026-10-28,2026-10-30
+JOB-2026-002,fullstack-platform-engineer-stripe,Fullstack Platform Engineer,Stripe,https://images.unsplash.com/photo-1557804506-669a67965ba0?w=160&h=160&fit=crop&q=80,https://stripe.com,Stripe builds economic infrastructure for the internet businesses.,"### About the Opportunity
+Stripe's Dashboard Platform team designs and maintains the foundational frontend and API tier powering millions of businesses daily.
+
+### What You'll Do
+- Engineer responsive accessible web interfaces using React TypeScript and Tailwind.
+- Design resilient backend services in Ruby and Go that scale seamlessly.
+- Spearhead frontend performance improvements optimizing core web vitals.",Help scale Stripe core merchant dashboard and global payments infrastructure.,https://stripe.com/jobs,Fullstack | TypeScript | React | Remote | Full-Time,Published,2026-10-25,2026-10-26
+JOB-2026-003,mlops-infrastructure-engineer-cohere,MLOps Infrastructure Engineer,Cohere,https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=160&h=160&fit=crop&q=80,https://cohere.com,Cohere provides enterprise-grade AI models for search and classification.,"### The Role
+Cohere is expanding its model serving infrastructure to serve billions of embedding queries and LLM tokens every day.
+
+### Responsibilities
+- Deploy monitor and scale Kubernetes clusters hosting tensor-parallel LLM inference engines.
+- Build CI/CD pipelines for automated model weight verification and canary rollouts.
+- Reduce p99 inference latency for enterprise RAG workloads.",Scale enterprise LLM inference clusters delivering sub-second response times.,https://cohere.com/careers,Artificial Intelligence | Machine Learning | Python | DevOps | Hybrid,Published,2026-10-22,2026-10-22
+JOB-2026-004,lead-frontend-engineer-figma,Lead Frontend Engineer Collaboration,Figma,https://images.unsplash.com/photo-1542744094-24638eff58bb?w=160&h=160&fit=crop&q=80,https://figma.com,Figma connects everyone in the design process.,"### About This Role
+Figma real-time multiplayer engine powers creative collaboration for millions of designers.
+
+### What You'll Tackle
+- Push the boundaries of WebAssembly WebGL and canvas rendering performance.
+- Design CRDT algorithms for sub-50ms collaborative sync.
+- Partner with product designers to prototype cutting-edge workflow interactions.",Build real-time multiplayer canvas systems used by millions of product creators.,https://www.figma.com/careers,Frontend Development | TypeScript | Remote | Full-Time,Published,2026-10-18,2026-10-18
+JOB-2026-005,backend-systems-architect-supabase,Backend Systems Architect,Supabase,https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=160&fit=crop&q=80,https://supabase.com,Supabase is the open source Firebase alternative.,"### Why Supabase?
+Supabase is building the backend stack for the next generation of internet applications.
+
+### Scope of Work
+- Architect high-availability PostgreSQL control planes and distributed connection pooling.
+- Write high-performance Go Rust and Elixir services.
+- Contribute upstream to open-source database tooling and Postgres extensions.",Build open-source PostgreSQL control planes and distributed realtime backends.,https://supabase.com/careers,Backend Development | Software Development | Remote | Full-Time,Published,2026-10-14,2026-10-14
+JOB-2026-006,ai-product-designer-mistral,AI Product & Interface Designer,Mistral AI,https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=160&h=160&fit=crop&q=80,https://mistral.ai,Mistral AI creates open-weight and commercial frontier language models.,"### The Challenge
+Generative AI requires reimagined human-computer interaction paradigms.
+
+### Responsibilities
+- Lead end-to-end design from user research and wireframing to high-fidelity prototypes.
+- Design developer platform consoles token playgrounds and prompt utilities.
+- Maintain and expand our design system with high accessibility standards.",Shape next-generation developer consoles for frontier AI models.,https://mistral.ai/careers,UI/UX Design | Artificial Intelligence | Remote | Full-Time,Published,2026-10-10,2026-10-10
+JOB-2026-007,draft-role-example,Draft Machine Learning Intern,Example AI Labs,,,Stealth AI laboratory.,"Draft listing for internal review only. Should NOT appear in public results.",Internal review only,https://example.com/apply,Machine Learning | Internship,Draft,2026-10-01,2026-10-01
+JOB-2026-008,closed-role-example,Closed Systems Specialist,Acme Cloud Systems,,,Cloud hosting provider.,"This vacancy has been successfully filled and should NOT appear in public results.",Filled role,https://example.com/apply,DevOps | Full-Time,Closed,2026-09-15,2026-10-01

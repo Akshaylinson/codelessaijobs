@@ -1,0 +1,6 @@
+{
+  "name": "Codeless AI Jobs",
+  "description": "Production-ready job discovery and aggregation platform powered by Google Sheets and Google Apps Script.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
