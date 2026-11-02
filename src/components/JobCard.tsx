@@ -47,7 +47,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, defaultLogo, onTagClick }
                   src={logoUrl}
                   alt={`${job.company_name} logo`}
                   onError={() => setImageError(true)}
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-contain object-center p-1"
                   loading="lazy"
                 />
               )}
