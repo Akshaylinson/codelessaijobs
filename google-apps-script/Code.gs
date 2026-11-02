@@ -190,16 +190,15 @@ function readPublishedJobs(sheet) {
     return []; // No data rows
   }
 
-  var headers = values[0];
   var jobs = [];
 
   for (var r = 1; r < values.length; r++) {
     var row = values[r];
-    
-    // Check status
+
+    // Accept "Published" or "Active" as valid published status
     var status = String(row[11] || "").trim();
-    if (status !== "Published") {
-      continue; // Exclude Draft, Closed, Archived, or empty
+    if (status !== "Published" && status !== "Active") {
+      continue;
     }
 
     var jobId = String(row[0] || "").trim();
@@ -218,7 +217,7 @@ function readPublishedJobs(sheet) {
 
     // Validation: Mandatory publication fields
     if (!jobId || !slug || !jobTitle || !companyName || !jobDesc || !appUrl) {
-      continue; // Skip invalid records missing required fields
+      continue;
     }
 
     // Must have at least one valid tag
@@ -297,11 +296,14 @@ function readSettings(ss) {
 }
 
 /**
- * Parses pipe-separated tags into a clean deduplicated array
+ * Parses pipe-separated OR comma-separated tags into a clean deduplicated array.
+ * Pipe takes priority: "Python | AI | Remote"
+ * Comma fallback: "Python, AI, Remote"
  */
 function parsePipeTags(raw) {
   if (!raw) return [];
-  var parts = String(raw).split("|");
+  var str = String(raw);
+  var parts = str.indexOf("|") !== -1 ? str.split("|") : str.split(",");
   var seen = {};
   var tags = [];
 
@@ -332,7 +334,7 @@ function normalizeDate(val) {
   }
   var str = String(val).trim();
   if (!str) return "";
-  
+
   var d = new Date(str);
   if (!isNaN(d.getTime())) {
     return d.toISOString().slice(0, 10);
@@ -356,4 +358,45 @@ function createJsonResponse(data, statusCode) {
   var output = ContentService.createTextOutput(JSON.stringify(data));
   output.setMimeType(ContentService.MimeType.JSON);
   return output;
+}
+
+/**
+ * Run this ONCE from Apps Script editor: Run > setupSheetHelpers
+ * Adds status dropdown and date pickers to the Jobs sheet.
+ */
+function setupSheetHelpers() {
+  var ss = getSpreadsheet();
+  var sheet = ss.getSheetByName("Jobs");
+  if (!sheet) { Logger.log("Jobs sheet not found."); return; }
+
+  var lastRow = Math.max(sheet.getLastRow(), 2);
+
+  // Column L (12) — status dropdown
+  var statusRange = sheet.getRange(2, 12, lastRow - 1, 1);
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Published", "Draft", "Closed", "Archived"], true)
+    .setAllowInvalid(false)
+    .build();
+  statusRange.setDataValidation(statusRule);
+
+  // Column M (13) — date_added picker
+  var dateRule = SpreadsheetApp.newDataValidation()
+    .requireDate()
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(2, 13, lastRow - 1, 1).setDataValidation(dateRule);
+
+  // Column N (14) — last_updated picker
+  sheet.getRange(2, 14, lastRow - 1, 1).setDataValidation(dateRule);
+
+  Logger.log("Done. Status dropdown and date pickers applied to Jobs sheet.");
+}
+
+/**
+ * Clears the Apps Script cache — run this after updating jobs in the sheet
+ * so changes appear immediately without waiting 5 minutes.
+ */
+function clearJobsCache() {
+  CacheService.getScriptCache().remove("codeless_jobs_list_v1");
+  Logger.log("Cache cleared.");
 }
