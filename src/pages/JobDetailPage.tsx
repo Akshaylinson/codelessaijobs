@@ -221,62 +221,60 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 sm:p-8 mb-4">
 
           {/* Top: Logo + Company + Title + Meta */}
-          <div className="flex items-start gap-4 min-w-0 pb-5 border-b border-slate-100">
-            {/* Logo */}
-            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
-              {showFallback ? (
-                <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xl tracking-wider">
-                  {initials}
-                </div>
-              ) : (
-                <img
-                  src={logoUrl}
-                  alt={`${job.company_name} logo`}
-                  onError={() => setImageError(true)}
-                  className="w-full h-full object-contain object-center p-1"
-                />
-              )}
-            </div>
-
-            {/* Company + Title + Meta */}
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
+          <div className="pb-5 border-b border-slate-100">
+            {/* Logo + Company name row */}
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                {showFallback ? (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xl tracking-wider">
+                    {initials}
+                  </div>
+                ) : (
+                  <img
+                    src={logoUrl}
+                    alt={`${job.company_name} logo`}
+                    onError={() => setImageError(true)}
+                    className="w-full h-full object-contain object-center p-1"
+                  />
+                )}
+              </div>
+              <div>
                 <span className="text-sm font-bold text-slate-700">{job.company_name}</span>
                 {companyWebsite && (
                   <a
                     href={companyWebsite}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium underline"
+                    className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium underline mt-0.5"
                   >
                     <Globe className="w-3 h-3" />
                     <span>Company Website</span>
                   </a>
                 )}
               </div>
+            </div>
 
-              <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-words">
-                {job.job_title}
-              </h1>
-
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-2.5 font-medium">
-                {job.date_added && (
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Posted {formatDate(job.date_added)}</span>
-                  </div>
-                )}
-                {job.last_updated && job.last_updated !== job.date_added && (
-                  <div className="flex items-center gap-1 text-slate-400">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>Updated {formatDate(job.last_updated)}</span>
-                  </div>
-                )}
-                <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Verified Opportunity</span>
-                </span>
-              </div>
+            {/* Full-width title + meta */}
+            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-words mb-2.5">
+              {job.job_title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
+              {job.date_added && (
+                <div className="flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Posted {formatDate(job.date_added)}</span>
+                </div>
+              )}
+              {job.last_updated && job.last_updated !== job.date_added && (
+                <div className="flex items-center gap-1 text-slate-400">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Updated {formatDate(job.last_updated)}</span>
+                </div>
+              )}
+              <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Verified Opportunity</span>
+              </span>
             </div>
           </div>
 
