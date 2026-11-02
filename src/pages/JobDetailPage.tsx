@@ -38,7 +38,6 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showRedirectModal, setShowRedirectModal] = useState(false);
 
   // Find job matching slug or ID
   const job = useMemo(() => {
@@ -121,15 +120,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
   const handleApplyClick = () => {
     const validUrl = sanitizeUrl(job?.application_url);
     if (!validUrl) return;
-    setShowRedirectModal(true);
-  };
-
-  const proceedToExternalApplication = () => {
-    const validUrl = sanitizeUrl(job?.application_url);
-    setShowRedirectModal(false);
-    if (validUrl) {
-      window.open(validUrl, '_blank', 'noopener,noreferrer');
-    }
+    window.open(validUrl, '_blank', 'noopener,noreferrer');
   };
 
   if (loading) {
@@ -476,46 +467,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
         )}
       </div>
 
-      {/* External Redirection Modal */}
-      {showRedirectModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="redirect-modal-title"
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
-        >
-          <div className="relative bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 p-6 animate-in zoom-in-95 duration-150">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4">
-              <ExternalLink className="w-6 h-6" />
-            </div>
 
-            <h3 id="redirect-modal-title" className="text-lg font-bold text-slate-900 mb-2">
-              Leaving Codeless AI Jobs
-            </h3>
-
-            <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-              You are being redirected to <strong>{job.company_name}&rsquo;s</strong> official job portal to complete and submit your application.
-            </p>
-
-            <div className="flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowRedirectModal(false)}
-                className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={proceedToExternalApplication}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-xs transition-colors"
-              >
-                Continue to Application
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
